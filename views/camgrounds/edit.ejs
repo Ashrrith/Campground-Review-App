@@ -1,1 +1,60 @@
+<% layout("layouts/boilerplate") %> 
+<div class="row">
+  <h1 class="text-center mt-3">Edit Campground</h1>
+  <div class="col-md-6 offset-md-3">
+    <form action="/campgrounds/<%=campground._id %>?_method=PUT" method="POST" novalidate class="valid-form" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label class="form-label" for="title">Camp Name</label>
+        <input class="form-control" type="text" id="title" name="campground[title]" value="<%= campground.title %> " required/>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="location">Location</label>
+        <input
+        class="form-control"
+          type="text"
+          id="location"
+          name="campground[location]"
+          placeholder="City, State"
+          value="<%= campground.location %> "
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="price">Campground price</label>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="price-label">$</span>
+          <input type="text" id="price" class="form-control" placeholder="0.00" aria-label="price" aria-describedby="price-label" name="campground[price]" value="<%= campground.price %> " required>
+        </div>
+      </div>
+      
+      <div class="mb-3">
+        <label class="form-label" for="description">Description</label>
+        <textarea class="form-control" type="text" id="description" name="campground[description]" required><%= campground.description %></textarea>
+      </div>
+      
+      <div class="mb-3">
+        <label for="image" class="form-label">Add more Images</label>
+        <input class="form-control" type="file" id="image" name="image" multiple>
+      </div>
 
+      <div class="mb-3">
+        <% campground.images.forEach((img, i)=> {%>
+          <img src="<%=img.thumbnail  %> " alt="" class="img-thumbnail mb-3">
+
+          <div class="form-check-inline">
+            <input type="checkbox" id="image-<%=i %>" name="deleteImages[]" value="<%= img.filename %>">
+            <label for="image-<%=i %>">Delete</label>
+          </div>
+          <% }) %>  
+      </div>
+
+      <div class="mb-3">
+        <button class="btn btn-info">Update Camground</button>
+      </div>
+    </form>
+    <div>
+      <a class="btn btn-danger mb-3" href="/campgrounds/<%=campground._id %> ">Cancel</a>
+    </div>
+    </div>
+  </div>
+</div>
